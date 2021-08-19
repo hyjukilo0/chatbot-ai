@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import './style.css';
 
 class Messagebox extends Component {
     render () {
         return (
-            <p>Mess</p>
+            <div className="message" >{this.props.mess}</div>
         );
     }
 }
