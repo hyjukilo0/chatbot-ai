@@ -1,0 +1,8 @@
+div.chatarea {
+    background-color: aliceblue;
+    width: 1000px;
+    height: 300px;
+    margin: auto;
+    border: solid 0.1em;
+    border-color:  rgb(1, 27, 27);
+}
