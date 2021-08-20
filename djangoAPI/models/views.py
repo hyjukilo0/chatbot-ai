@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from models.apps import ModelsConfig
+from models.models import Messagepost
+from models.serializers import MessagepostSerializer
 
 import numpy as np
 #import pandas as pd
@@ -16,6 +19,8 @@ class Classification(APIView):
     
     def post(self, request):
         if request.method == 'POST':
+            mess = MessagepostSerializer(data = request.data)
+            print(mess.data)
             for x in request.data:
                 mes = [x]
             #mes = self.cleantext(mes)
