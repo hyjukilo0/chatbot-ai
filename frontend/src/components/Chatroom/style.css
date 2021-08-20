@@ -1,15 +1,122 @@
-div.chatarea {
-    width: 1000px;
-    height: 300px;
-    margin: auto;
-    border: solid 0.1em;
-    border-color:  rgb(1, 27, 27);
-    overflow: auto;
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-div.message {
-    background-color: aliceblue;
+button:hover {
+    cursor: pointer;
+}
+
+input {
+    background-color: white;
+}
+
+input:focus {
+    outline: none;
+}
+
+.chat-container {
+    width: 40%;
+    height: 100%;
+    margin: auto;
+}
+
+.chat-area {
+    width: 100%;
+    height: 580px;
+    overflow: auto;
+    border-left: 0.5px solid lightgray;
+    border-right: 0.5px solid lightgray;
+    border-bottom: 0.5px solid lightgray;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    width: 100%;
+    position: relative;
+}
+
+.mymessage {
+    max-width: 200px;
+    background-color: rgb(77, 79, 255);
+    padding: 10px;
+    margin-right: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border-radius: 10px;
-    margin: 0;
-    padding: 0;
+    text-align: right;
+    align-self: flex-end;
+    color: white;
+}
+
+.botmessage {
+    max-width: 200px;
+    background-color: lightgray;
+    padding: 10px;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    text-align: left;
+    align-self: flex-start;
+}
+
+.message-input {
+    background-color: rgb(77, 79, 255);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0 0 10px 10px;
+}
+
+.inputfield-container {
+    width: 70%;
+    
+}
+
+.image-container {
+    width: 15%;
+    text-align: center;
+}
+
+.send-container {
+    width: 15%;
+    text-align: center;
+}
+
+.mess-inputfield {
+    margin: 5px 0px 10px 0px;
+    border-radius: 0.5rem;
+    width: 98%;
+}
+
+.send-mes {
+    margin: 5px 5px 10px 5px;
+    border-radius: 0.3rem;
+    border-color: white;
+    background-color: rgb(77, 79, 255);
+    color: white;
+}
+
+
+input[type = "file"]{
+    display: none;
+}
+
+label {
+    margin: 10px 0px 10px 5px;
+    color: white;
+    font-size: small;
+    border-color: white;
+}
+
+.icon-upload-image {
+    background-image: url(http://localhost:3000/icons/file-image-solid.svg);
+    width: 30px;
+    height: 30px;
 }

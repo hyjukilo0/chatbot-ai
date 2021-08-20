@@ -35,7 +35,7 @@ class Chatarea extends Component {
     appendAns = () => {
         console.log("a: ", this.state.answer)
         if (this.state.answer !== ""){
-            this.displayMess.push(<Messagebox mess={this.state.answer}/>)
+            this.displayMess.push(<Messagebox mess={this.state.answer} self="message botmessage"/>)
             this.setState({
                 messageList : this.displayMess,
                 answer : ""
@@ -62,7 +62,7 @@ class Chatarea extends Component {
         let haveappend = false;
         if (this.state.message !== "" ){
             haveappend = true;
-            this.displayMess.push(<Messagebox mess={this.state.message} />);
+            this.displayMess.push(<Messagebox mess={this.state.message} self="message mymessage"/>);
             this.setState({
                 messageList : this.displayMess,
                 message : ""
@@ -70,7 +70,7 @@ class Chatarea extends Component {
         }
         if (this.state.image !== null){
             haveappend = true;
-            this.displayMess.push(<img src={this.state.image}></img>)
+            this.displayMess.push(<Messagebox mess={<img src={this.state.image} style={{width: '90%'}}></img>} self="message mymessage"/>)
             this.setState({
                 messageList : this.displayMess,
                 image : null
@@ -84,14 +84,17 @@ class Chatarea extends Component {
 
     render () {
         return(
-            <div>
-            <div className="chatarea">
+            <div className="chat-container">
+            <div className="chat-area">
                 {this.displayMess}
             </div>
-            <div className="message_input">
-                <input type="file" onChange={this.handleImage}></input>
-                <input type="text" value={this.state.message} onChange={this.handleChange} onKeyDown={this.handleKeypress} className="mess"/>              
-                <button onClick={this.appendMess}>Send</button>
+            <div className="message-input">
+                <div className="image-container">
+                    <input type="file" id="image-inputfield" onChange={this.handleImage} accept="image/*"></input>
+                    <label for="image-inputfield"><svg className="icon-upload-image" ></svg></label>
+                </div>
+                <div className="inputfield-container"><input type="text" className="mess-inputfield" value={this.state.message} onChange={this.handleChange} onKeyDown={this.handleKeypress}/></div>              
+                <div className="send-container"><button className="send-mes" onClick={this.appendMess}>Send</button></div>
             </div>
             </div>
         );

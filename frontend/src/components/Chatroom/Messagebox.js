@@ -4,7 +4,7 @@ import './style.css';
 class Messagebox extends Component {
     render () {
         return (
-            <div className="message" >{this.props.mess}</div>
+            <div className={this.props.self} >{this.props.mess}</div>
         );
     }
 }

@@ -19,19 +19,20 @@ class Classification(APIView):
     
     def post(self, request):
         if request.method == 'POST':
-            mess = MessagepostSerializer(data = request.data)
-            print(mess.data)
-            for x in request.data:
-                mes = [x]
-            #mes = self.cleantext(mes)
+            print(request.data.get("image"))
+            if request.POST['message']:
+                mes = [request.POST['message']]            
+                mes = ModelsConfig.tfidf.transform(mes)
+                mes.toarray()
             #print(mes)
-            mes = ModelsConfig.tfidf.transform(mes)
-            mes.toarray()
-            #print(mes)
-            for x in ModelsConfig.svcmodel.predict(mes):
-                i = x
-            print(ModelsConfig.intent[i])
-            return Response(ModelsConfig.intent[i])
+                for x in ModelsConfig.svcmodel.predict(mes):
+                    i = x
+                print(ModelsConfig.intent[i])
+                return Response(ModelsConfig.intent[i])
+            if request.POST['image']:
+
+                return Response("This is a image")
+            return Response("None")
     
     def cleantext(self, text):
         t = str(text)
