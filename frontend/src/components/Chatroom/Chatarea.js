@@ -44,7 +44,10 @@ class Chatarea extends Component {
     }
 
     postText = () => {
-        axios.post('http://127.0.0.1:8000/', this.state.message)
+        let messagepost = new FormData();
+        messagepost.append('message', this.state.message);
+        messagepost.append('image', this.state.image);
+        axios.post('http://127.0.0.1:8000/', messagepost)
         .then(res => {
             const answer = res.data;
             this.setState({
