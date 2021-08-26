@@ -18,7 +18,12 @@ class ModelsConfig(AppConfig):
     tcwords = myfile['Tcwords'].values
     with open(os.path.join(TMODEL_FOLDER, "linearsvc-001.pkl"), 'rb') as file:  
         svcmodel = pickle.load(file)
+    with open(os.path.join(TMODEL_FOLDER, "linearsvc-001-entity.pkl"), 'rb') as file:  
+        svcmodel_entity = pickle.load(file)
     with open(os.path.join(TMODEL_FOLDER, "tfidf.pkl"), 'rb') as file:  
         tfidf = pickle.load(file)
+    with open(os.path.join(TMODEL_FOLDER, "tfidf-entity.pkl"), 'rb') as file:  
+        tfidf_entity = pickle.load(file)
 
     intent = ['Changing', 'Connect', 'Done', 'Hello', 'Inform', 'Order', 'Other', 'Request', 'Return', 'feedback']
+    entity = ['ID_product','color_product', 'material_product','cost_product','amount_product','Id member', 'shiping fee','height customer','weight customer','phone', 'address', 'size']
