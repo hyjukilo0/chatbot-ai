@@ -7,33 +7,14 @@ from models.models import Messagepost
 from models.serializers import MessagepostSerializer
 
 import numpy as np
+import re
 #import pandas as pd
-#import underthesea
-#from underthesea import word_tokenize
+import underthesea
+from underthesea import word_tokenize
 
 # Create your views here.
 class Classification(APIView):
 
-    def get(self, request):
-        return Response(request.data)
-    
-    def post(self, request):
-        if request.method == 'POST':
-            print(request.data.get("image"))
-            if request.POST['message']:
-                mes = [request.POST['message']]            
-                mes = ModelsConfig.tfidf.transform(mes)
-                mes.toarray()
-            #print(mes)
-                for x in ModelsConfig.svcmodel.predict(mes):
-                    i = x
-                print(ModelsConfig.intent[i])
-                return Response(ModelsConfig.intent[i])
-            if request.POST['image']:
-
-                return Response("This is a image")
-            return Response("None")
-    
     def cleantext(self, text):
         t = str(text)
         t = t.lower()
@@ -49,6 +30,29 @@ class Classification(APIView):
                 if tc == '' or tc == ' ':
                     continue
                 t = t.replace(tc, wordr)
-        #aword = [w for w in word_tokenize(t, format="text").split(' ')  if (w not in ModelsConfig.stopwords)]
+        aword = [w for w in word_tokenize(t, format="text").split(' ')  if (w not in ModelsConfig.stopwords)]
         u = ' '.join(aword)
         return u
+
+    def get(self, request):
+        return Response(request.data)
+    
+    def post(self, request):
+        if request.method == 'POST':
+            print(request.data.get("image"))
+            if request.POST['message']:
+                mes = request.POST['message']
+                mes = [self.cleantext(mes)]         
+                mes = ModelsConfig.tfidf.transform(mes)
+                mes.toarray()
+            #print(mes)
+                for x in ModelsConfig.svcmodel.predict(mes):
+                    i = x
+                print(ModelsConfig.intent[i])
+                return Response(ModelsConfig.intent[i])
+            if request.POST['image']:
+
+                return Response("This is a image")
+            return Response("None")
+    
+    
