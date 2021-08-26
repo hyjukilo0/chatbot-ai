@@ -39,7 +39,14 @@ class Classification(APIView):
 
                 return Response(answer)
             if request.POST['image']:
-
+                imagepost = None
+                print(request.POST['image'])
+                try:
+                    chunks = request.FILES['image'].chunks()
+                    imagepost = next(chunks)
+                except:
+                    pass
+                print(imagepost)
                 return Response("This is a image")
             return Response("None")
 

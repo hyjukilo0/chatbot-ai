@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Chatarea />
+        <Chatarea user="khách 1" />
       </div>
     )
   }

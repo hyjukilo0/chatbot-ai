@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Messagebox from './Messagebox';
 import axios from 'axios';
+import ReactScrollableFeed from 'react-scrollable-feed';
 import './style.css';
 
 
@@ -15,6 +16,7 @@ class Chatarea extends Component {
           answer : ""
         };
     }
+    
     
     handleChange = (e) => {
         this.setState({message:e.target.value});
@@ -45,6 +47,7 @@ class Chatarea extends Component {
 
     postText = () => {
         let messagepost = new FormData();
+        messagepost.append('user', this.props.customer)
         messagepost.append('message', this.state.message);
         messagepost.append('image', this.state.image);
         axios.post('http://127.0.0.1:8000/', messagepost)
@@ -86,7 +89,8 @@ class Chatarea extends Component {
         return(
             <div className="chat-container">
             <div className="chat-area">
-                {this.displayMess}
+                
+                <ReactScrollableFeed className="chat-area">{this.displayMess.map(mes => mes)}</ReactScrollableFeed>
             </div>
             <div className="message-input">
                 <div className="image-container">
