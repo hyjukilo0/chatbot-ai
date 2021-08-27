@@ -17,7 +17,7 @@ from django.db import models
 
 class Messagepost(models.Model):
     message = models.TextField()
-    message_image = models.ImageField(upload_to='images/questions/%Y/%m', null=True, blank=True, default=None)
+    message_image = models.ImageField(upload_to='images/questions/', null=True, blank=True, default=None)
 
 class Products(models.Model):
     PRODUCT_SIZES = (

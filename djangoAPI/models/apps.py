@@ -1,5 +1,7 @@
 from django.apps import AppConfig
 
+from tensorflow.keras.models import load_model
+
 import os
 import pickle
 import numpy as np
@@ -25,5 +27,8 @@ class ModelsConfig(AppConfig):
     with open(os.path.join(TMODEL_FOLDER, "tfidf-entity.pkl"), 'rb') as file:  
         tfidf_entity = pickle.load(file)
 
+    imagemodel = load_model(os.path.join(TMODEL_FOLDER, 'hume_imageClassifier.h5'))
+
     intent = ['Changing', 'Connect', 'Done', 'Hello', 'Inform', 'Order', 'Other', 'Request', 'Return', 'feedback']
     entity = ['ID_product','color_product', 'material_product','cost_product','amount_product','Id member', 'shiping fee','height customer','weight customer','phone', 'address', 'size']
+    image_id = ['D0010','D0011','D0012','D0013','D0014','D0015','D0016','D0017','D004','D005','D006','D007','D008','D009','DS001','Da','S002','S003','S004','S005','S006','S008','S009']

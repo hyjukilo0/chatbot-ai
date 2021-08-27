@@ -13,6 +13,7 @@ class Chatarea extends Component {
           messageList : this.displayMess,
           message : "",
           image : null,
+          imageURL : null,
           answer : ""
         };
     }
@@ -30,7 +31,8 @@ class Chatarea extends Component {
 
     handleImage = (e) => {
         this.setState({
-            image: URL.createObjectURL(e.target.files[0])
+            imageURL: URL.createObjectURL(e.target.files[0]),
+            image: e.target.files[0]
           })
     }
 
@@ -73,10 +75,11 @@ class Chatarea extends Component {
         }
         if (this.state.image !== null){
             haveappend = true;
-            this.displayMess.push(<Messagebox mess={<img src={this.state.image} style={{width: '90%'}}></img>} self="message mymessage"/>)
+            this.displayMess.push(<Messagebox mess={<img src={this.state.imageURL} style={{width: '90%'}}></img>} self="message mymessage"/>)
             this.setState({
                 messageList : this.displayMess,
-                image : null
+                image : null,
+                imageURL : null
             });
         }
         if (haveappend === true){

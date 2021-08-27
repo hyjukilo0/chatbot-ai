@@ -3,12 +3,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from models.apps import ModelsConfig
-from models.models import Messagepost
+from models.models import Messagepost, Products
 from models.serializers import MessagepostSerializer
 
+from django.core.files.storage import default_storage
+from django.conf import settings
+
+import os
 import numpy as np
 import re
-#import pandas as pd
+import cv2
 import underthesea
 from underthesea import word_tokenize
 
@@ -20,7 +24,6 @@ class Classification(APIView):
     
     def post(self, request):
         if request.method == 'POST':
-            print(request.data.get("image"))
             if request.POST['message']:
                 mes = request.POST['message']
                 
@@ -38,18 +41,30 @@ class Classification(APIView):
                 print(answer)
 
                 return Response(answer)
-            if request.POST['image']:
+            
+            if request.FILES['image']:
                 imagepost = None
-                print(request.POST['image'])
-                try:
-                    chunks = request.FILES['image'].chunks()
-                    imagepost = next(chunks)
-                except:
-                    pass
-                print(imagepost)
+                filename = request.FILES['image'].name
+                pathfile = os.path.join('models/static/images/', filename)
+                chunks = request.FILES['image'].chunks()
+                imagepost = next(chunks)
+                with default_storage.open(pathfile, 'wb+') as destination:
+                    destination.write(imagepost)
+                self.getproductid(pathfile)
                 return Response("This is a image")
             return Response("None")
 
+    def getproductid(self, image):
+        img = cv2.imread(image)
+        img = cv2.resize(img, (256, 256))
+        img = img.reshape(1, 256, 256, 3)
+        req = img / 255
+        i = np.argmax(ModelsConfig.imagemodel.predict(req))
+        getid = ModelsConfig.image_id[i]
+        productname = Products.objects.filter(product_id=getid).values('product_name')
+        print(getid, productname)
+
+    
     def getentity(self, text):
         print(ModelsConfig.svcmodel_entity.predict(text))
         entity = []
