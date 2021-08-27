@@ -35,7 +35,7 @@ class Classification(APIView):
                 mes_entity = self.embeddtext(mes, 1)
                 entity = self.getentity(mes_entity)
                 
-                answer = "Intent: " + intent + "\n" + "Entities: "
+                answer = "Intent: " + intent + ", " + "Entities: "
                 for e in entity:
                     answer += (e + " ")
                 print(answer)
@@ -50,8 +50,8 @@ class Classification(APIView):
                 imagepost = next(chunks)
                 with default_storage.open(pathfile, 'wb+') as destination:
                     destination.write(imagepost)
-                self.getproductid(pathfile)
-                return Response("This is a image")
+                answerimage = self.getproductid(pathfile)
+                return Response(answerimage)
             return Response("None")
 
     def getproductid(self, image):
@@ -63,10 +63,11 @@ class Classification(APIView):
         getid = ModelsConfig.image_id[i]
         productname = Products.objects.filter(product_id=getid).values('product_name')
         print(getid, productname)
+        return getid + ": " + productname[0]['product_name']
 
     
     def getentity(self, text):
-        print(ModelsConfig.svcmodel_entity.predict(text))
+        # print(ModelsConfig.svcmodel_entity.predict(text))
         entity = []
         for x in ModelsConfig.svcmodel_entity.predict(text):
             for i in range(len(x)):
