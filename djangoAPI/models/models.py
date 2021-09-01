@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 # class Customer(models.Model):
 #     customer_name = models.CharField(max_length=150)
-#     customer_username = models.CharField(max_length=50, unique=True)
+#     customer_username = models.CharField(max_length=100, unique=True)
 #     customer_pass = models.CharField(max_length=50)
 
 # class Messagehistory(models.Model):
@@ -18,6 +18,7 @@ from django.db import models
 class Messagepost(models.Model):
     message = models.TextField()
     message_image = models.ImageField(upload_to='images/questions/', null=True, blank=True, default=None)
+    message_user = models.CharField(max_length=100, unique=True)
 
 class Products(models.Model):
     PRODUCT_SIZES = (
