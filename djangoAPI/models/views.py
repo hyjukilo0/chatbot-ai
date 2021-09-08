@@ -32,7 +32,9 @@ class Classification(APIView):
             global aorder
             if request.POST['message']:
                 mes = request.POST['message']
-                
+                if mes == "x":
+                    aorder = Order()
+                    return Response("")
                 mes = [self.cleantext(mes)]
                 mes_split = mes[0].split(' ')
                 print(mes_split)   
@@ -46,8 +48,9 @@ class Classification(APIView):
                 answer = "Intent: " + intent + ", " + "Entities: "
                 for e in entity:
                     answer += (e + " ")
+                print(answer)
 
-                return Response(answer)
+                return Response(self.scenario(intent, entity))
             
             if request.FILES['image']:
                 imagepost = None
@@ -59,7 +62,7 @@ class Classification(APIView):
                     destination.write(imagepost)
                 answerimage = self.getproductid(pathfile)
                 print(answerimage)
-                return
+                return Response("")
             return Response("None")
 
     def scenario(self, intent, entity):
@@ -92,7 +95,7 @@ class Classification(APIView):
                 elif check == "color":
                     return "Bạn khách muốn chọn màu nào ạ"
                 elif check == "size":    
-                    return "bạn muốn lấy size nào ạ? Hoặc bạn có thể cho shop xin cân nặng và chiều cao để shop tư vấn size cho mình nha"
+                    return "{} này bạn muốn lấy size nào ạ? hoặc bạn có thể cho shop xin cân nặng và chiều cao để shop tư vấn size cho mình nha".format(aorder.productname)
                 elif check == "amount":
                     return "Bạn muốn đặt bao nhiêu bộ này vậy ạ?"
                 elif check == "address":
